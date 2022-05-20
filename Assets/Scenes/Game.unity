@@ -519,6 +519,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e1e86bd8d8744c38ccf27b6abb934e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _whiteCharacter: {fileID: 2092319032}
+  _blackCharacter: {fileID: 1020962381}
 --- !u!1 &837620555
 GameObject:
   m_ObjectHideFlags: 0
@@ -868,6 +870,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1020962381 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4520158136021526586, guid: 8398e8b65eb098540a8a53b03e17f28f, type: 3}
+  m_PrefabInstance: {fileID: 747438037}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1039804488
 GameObject:
   m_ObjectHideFlags: 0
@@ -1157,6 +1164,7 @@ MonoBehaviour:
   _menuManager: {fileID: 580564528}
   _cosmeticsManager: {fileID: 915373658}
   _shopManager: {fileID: 1761717639}
+  _config: {fileID: 11400000, guid: b24f4128ea9cd2347afd2e473c2db6d9, type: 2}
 --- !u!1 &1847381116
 GameObject:
   m_ObjectHideFlags: 0
@@ -1245,6 +1253,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc4f170036e4920829921555c90f2ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2092319032 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4520158136021526586, guid: 8398e8b65eb098540a8a53b03e17f28f, type: 3}
+  m_PrefabInstance: {fileID: 4520158136229816578}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4520158136229816578
 PrefabInstance:
   m_ObjectHideFlags: 0

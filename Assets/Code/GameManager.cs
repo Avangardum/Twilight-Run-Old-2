@@ -20,7 +20,7 @@ namespace Avangardum.TwilightRun
 
         public void StartGame()
         {
-            throw new System.NotImplementedException();
+            _playerCharactersController.Reset();
         }
 
         public void StartTutorial()

@@ -7,7 +7,7 @@ namespace Avangardum.TwilightRun
         event EventHandler CoinCollected;
         event EventHandler CharacterDied;
         void Reset();
-        void SetSpeed(float speed);
         void SwapCharacters();
+        void InjectDependencies(IPlayerCharactersConfig config);
     }
 }
