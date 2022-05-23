@@ -6,5 +6,8 @@ namespace Avangardum.TwilightRun
         float PlayerCharacterBaseVerticalSpeed { get; }
         float PlayerCharacterSpeedMultiplierIncreaseSpeed { get; }
         float PlayerCharacterSpeedMultiplierMax { get; }
+        float PlayerCharacterJumpingDuration { get; }
+        float PlayerCharacterFallingDuration { get; }
+        float PlayerCharacterLandingDuration { get; }
     }
 }

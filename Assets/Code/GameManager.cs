@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Avangardum.TwilightRun
@@ -16,6 +17,13 @@ namespace Avangardum.TwilightRun
             _tutorialLevelGenerator = tutorialLevelGenerator;
             _playerCharactersController = playerCharactersController;
             _inputManager = inputManager;
+
+            inputManager.Tap += OnTap;
+        }
+
+        private void OnTap(object sender, EventArgs e)
+        {
+            _playerCharactersController.SwapCharacters();
         }
 
         public void StartGame()

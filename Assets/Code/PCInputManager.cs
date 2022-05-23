@@ -9,7 +9,7 @@ namespace Avangardum.TwilightRun
 
         private void Update()
         {
-            if (Input.anyKey)
+            if (Input.anyKeyDown)
             {
                 Tap?.Invoke(this, EventArgs.Empty);
             }

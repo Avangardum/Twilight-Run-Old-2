@@ -16,3 +16,6 @@ MonoBehaviour:
   <PlayerCharacterBaseVerticalSpeed>k__BackingField: 1
   <PlayerCharacterSpeedMultiplierIncreaseSpeed>k__BackingField: 0.01666666
   <PlayerCharacterSpeedMultiplierMax>k__BackingField: 5
+  <PlayerCharacterJumpingDuration>k__BackingField: 0.1
+  <PlayerCharacterFallingDuration>k__BackingField: 0.8
+  <PlayerCharacterLandingDuration>k__BackingField: 0.1
