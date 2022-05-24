@@ -18,8 +18,17 @@ namespace Avangardum.TwilightRun
             WhiteMovingUp = 3,
             WhiteMovingDown = 4,
         }
+        
+        private enum SwappingState
+        {
+            None = 0,
+            Jumping = 1,
+            Falling = 2,
+            Landing = 3,
+        }
 
         private static readonly int AnimatorSpeedMultiplierHash = Animator.StringToHash("SpeedMultiplier");
+        private static readonly int AnimatorSwappingStateHash = Animator.StringToHash("SwappingState");
         
         [SerializeField] private GameObject _whiteCharacter;
         [SerializeField] private GameObject _blackCharacter;
@@ -138,7 +147,6 @@ namespace Avangardum.TwilightRun
 
                 // set euler angles
                 var hasPassedTheMiddle = positionLerpArgument > 0.5f;
-                // var rotationLerpArgument = hasPassedTheMiddle ? (positionLerpArgument * 2) - 1 : positionLerpArgument * 2;
                 if (hasPassedTheMiddle)
                 {
                     var rotationLerpArgument = positionLerpArgument * 2 - 1;
@@ -151,7 +159,25 @@ namespace Avangardum.TwilightRun
                     _characterMovingUp.transform.eulerAngles = Vector3.Lerp(EulerAnglesOnBottomTrack, EulerAnglesInMiddleMovingUp, rotationLerpArgument);
                     _characterMovingDown.transform.eulerAngles = Vector3.Lerp(EulerAnglesOnTopTrack, EulerAnglesInMiddleMovingDown, rotationLerpArgument);
                 }
+                
+                // set animators state
+                SwappingState swappingState;
+                if (_timeSinceSwapStart < _config.PlayerCharacterJumpingDuration)
+                {
+                    swappingState = SwappingState.Jumping;
+                }
+                else if (_timeSinceSwapStart < _config.PlayerCharacterJumpingDuration + _config.PlayerCharacterFallingDuration)
+                {
+                    swappingState = SwappingState.Falling;
+                }
+                else
+                {
+                    swappingState = SwappingState.Landing;
+                }
+                _whiteCharacterAnimator.SetInteger(AnimatorSwappingStateHash, (int) swappingState);
+                _blackCharacterAnimator.SetInteger(AnimatorSwappingStateHash, (int) swappingState);
 
+                // check for swap end
                 if (_timeSinceSwapStart >= _totalSwapDuration)
                 {
                     // terminate swapping
@@ -161,6 +187,8 @@ namespace Avangardum.TwilightRun
                         CharactersPositions.WhiteMovingDown => CharactersPositions.WhiteOnBottomTrack,
                         _ => throw new ArgumentOutOfRangeException()
                     };
+                    _whiteCharacterAnimator.SetInteger(AnimatorSwappingStateHash, (int) SwappingState.None);
+                    _blackCharacterAnimator.SetInteger(AnimatorSwappingStateHash, (int) SwappingState.None);
                 }
             }
 
