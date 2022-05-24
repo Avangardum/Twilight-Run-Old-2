@@ -115,6 +115,32 @@ namespace Avangardum.TwilightRun
             _blackCharacterStartPosition = _blackCharacter.transform.position;
             _bottomTrackY = _whiteCharacterStartPosition.y;
             _topTrackY = _blackCharacterStartPosition.y;
+            _whiteCharacter.GetComponent<PlayerCharacterCollisionDetector>().ObstacleCollision += OnWhiteCharacterObstacleCollision;
+            _blackCharacter.GetComponent<PlayerCharacterCollisionDetector>().ObstacleCollision += OnBlackCharacterObstacleCollision;
+        }
+
+        private void OnWhiteCharacterObstacleCollision(object sender, PlayerCharacterCollisionArgs args)
+        {
+            if (args.OtherColor != GameColor.White)
+            {
+                KillCharacters();
+            }
+        }
+
+        private void OnBlackCharacterObstacleCollision(object sender, PlayerCharacterCollisionArgs args)
+        {
+            if (args.OtherColor != GameColor.Black)
+            {
+                KillCharacters();
+            }
+        }
+
+        private void KillCharacters()
+        {
+            _isGameActive = false;
+            _whiteCharacterAnimator.enabled = false;
+            _blackCharacterAnimator.enabled = false;
+            CharacterDied?.Invoke(this, EventArgs.Empty);
         }
 
         private void FixedUpdate()
