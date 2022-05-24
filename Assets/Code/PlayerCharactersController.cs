@@ -5,6 +5,11 @@ namespace Avangardum.TwilightRun
 {
     class PlayerCharactersController : MonoBehaviour, IPlayerCharactersController
     {
+        private static readonly Vector3 EulerAnglesOnBottomTrack = new Vector3(0, 0, 0);
+        private static readonly Vector3 EulerAnglesOnTopTrack = new Vector3(180, 180, 0);
+        private static readonly Vector3 EulerAnglesInMiddleMovingUp = new Vector3(180, 0, 0);
+        private static readonly Vector3 EulerAnglesInMiddleMovingDown = new Vector3(0, 180, 0);
+        
         private enum CharactersPositions
         {
             None = 0,
@@ -33,8 +38,6 @@ namespace Avangardum.TwilightRun
         private float _topTrackY;
         private float _bottomTrackY;
         private float _totalSwapDuration;
-        private Vector3 _eulerAnglesOnTopTrack;
-        private Vector3 _eulerAnglesOnBottomTrack;
 
         private bool IsSwappingPositions => _charactersPositions is CharactersPositions.WhiteMovingDown or CharactersPositions.WhiteMovingUp;
 
@@ -56,8 +59,8 @@ namespace Avangardum.TwilightRun
         {
             _whiteCharacter.transform.position = _whiteCharacterStartPosition;
             _blackCharacter.transform.position = _blackCharacterStartPosition;
-            _whiteCharacter.transform.eulerAngles = _eulerAnglesOnBottomTrack;
-            _blackCharacter.transform.eulerAngles = _eulerAnglesOnTopTrack;
+            _whiteCharacter.transform.eulerAngles = EulerAnglesOnBottomTrack;
+            _blackCharacter.transform.eulerAngles = EulerAnglesOnTopTrack;
             _charactersPositions = CharactersPositions.WhiteOnBottomTrack;
             SpeedMultiplier = 1;
             _isGameActive = true;
@@ -103,8 +106,6 @@ namespace Avangardum.TwilightRun
             _blackCharacterStartPosition = _blackCharacter.transform.position;
             _bottomTrackY = _whiteCharacterStartPosition.y;
             _topTrackY = _blackCharacterStartPosition.y;
-            _eulerAnglesOnBottomTrack = _whiteCharacter.transform.eulerAngles;
-            _eulerAnglesOnTopTrack = _blackCharacter.transform.eulerAngles;
         }
 
         private void FixedUpdate()
@@ -124,18 +125,32 @@ namespace Avangardum.TwilightRun
             if (IsSwappingPositions)
             {
                 _timeSinceSwapStart += Time.fixedDeltaTime;
-                var lerpArgument = (_timeSinceSwapStart - _config.PlayerCharacterJumpingDuration) / _config.PlayerCharacterFallingDuration;
+                var positionLerpArgument = (_timeSinceSwapStart - _config.PlayerCharacterJumpingDuration) / _config.PlayerCharacterFallingDuration;
                 
+                // set vertical position
                 var characterMovingUpPosition = _characterMovingUp.transform.position;
-                characterMovingUpPosition.y = Mathf.Lerp(_bottomTrackY, _topTrackY, lerpArgument);
+                characterMovingUpPosition.y = Mathf.Lerp(_bottomTrackY, _topTrackY, positionLerpArgument);
                 _characterMovingUp.transform.position = characterMovingUpPosition;
                 
                 var characterMovingDownPosition = _characterMovingDown.transform.position;
-                characterMovingDownPosition.y = Mathf.Lerp(_topTrackY, _bottomTrackY, lerpArgument);
+                characterMovingDownPosition.y = Mathf.Lerp(_topTrackY, _bottomTrackY, positionLerpArgument);
                 _characterMovingDown.transform.position = characterMovingDownPosition;
 
-                _characterMovingUp.transform.eulerAngles = Vector3.Lerp(_eulerAnglesOnBottomTrack, _eulerAnglesOnTopTrack, lerpArgument);
-                _characterMovingDown.transform.eulerAngles = Vector3.Lerp(_eulerAnglesOnTopTrack, _eulerAnglesOnBottomTrack, lerpArgument);
+                // set euler angles
+                var hasPassedTheMiddle = positionLerpArgument > 0.5f;
+                // var rotationLerpArgument = hasPassedTheMiddle ? (positionLerpArgument * 2) - 1 : positionLerpArgument * 2;
+                if (hasPassedTheMiddle)
+                {
+                    var rotationLerpArgument = positionLerpArgument * 2 - 1;
+                    _characterMovingUp.transform.eulerAngles = Vector3.Lerp(EulerAnglesInMiddleMovingUp, EulerAnglesOnTopTrack, rotationLerpArgument);
+                    _characterMovingDown.transform.eulerAngles = Vector3.Lerp(EulerAnglesInMiddleMovingDown, EulerAnglesOnBottomTrack, rotationLerpArgument);
+                }
+                else
+                {
+                    var rotationLerpArgument = positionLerpArgument * 2;
+                    _characterMovingUp.transform.eulerAngles = Vector3.Lerp(EulerAnglesOnBottomTrack, EulerAnglesInMiddleMovingUp, rotationLerpArgument);
+                    _characterMovingDown.transform.eulerAngles = Vector3.Lerp(EulerAnglesOnTopTrack, EulerAnglesInMiddleMovingDown, rotationLerpArgument);
+                }
 
                 if (_timeSinceSwapStart >= _totalSwapDuration)
                 {
