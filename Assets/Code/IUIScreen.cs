@@ -1,6 +1,6 @@
 namespace Avangardum.TwilightRun
 {
-    public interface IMenu
+    public interface IUIScreen
     {
         void Show();
         void Hide();

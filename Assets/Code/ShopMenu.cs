@@ -9,12 +9,12 @@ namespace Avangardum.TwilightRun
 
         public void Show()
         {
-            throw new NotImplementedException();
+            gameObject.SetActive(true);
         }
 
         public void Hide()
         {
-            throw new NotImplementedException();
+            gameObject.SetActive(false);
         }
     }
 }

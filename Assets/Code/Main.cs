@@ -13,6 +13,7 @@ namespace Avangardum.TwilightRun
         [SerializeField] private GameManager _gameManager;
         [SerializeField] private MainMenu _mainMenu;
         [SerializeField] private ShopMenu _shopMenu;
+        [SerializeField] private GameUI _gameUI;
         [SerializeField] private MenuManager _menuManager;
         [SerializeField] private CosmeticsManager _cosmeticsManager;
         [SerializeField] private ShopManager _shopManager;
@@ -21,13 +22,11 @@ namespace Avangardum.TwilightRun
         private void Awake()
         {
             // inject dependencies
-            _gameManager.InjectDependencies(_standardLevelGenerator, _tutorialLevelGenerator, _playerCharactersController, _pcInputManager);
+            _gameManager.InjectDependencies(_standardLevelGenerator, _tutorialLevelGenerator, _playerCharactersController, _pcInputManager, _gameUI);
             _playerCharactersController.InjectDependencies(_config);
             _standardLevelGenerator.InjectDependencies(_config);
-            _menuManager.InjectDependencies(_gameManager, _mainMenu, _shopMenu);
+            _menuManager.InjectDependencies(_gameManager, _mainMenu, _shopMenu, _gameUI);
             _shopManager.InjectDependencies(_shopMenu, _cosmeticsManager);
-            
-            _gameManager.StartGame();
         }
     }
 }

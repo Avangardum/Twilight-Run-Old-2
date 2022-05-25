@@ -75,12 +75,14 @@ namespace Avangardum.TwilightRun
             _blackCharacter.transform.eulerAngles = EulerAnglesOnTopTrack;
             _charactersPositions = CharactersPositions.WhiteOnBottomTrack;
             SpeedMultiplier = 1;
+            _whiteCharacterAnimator.enabled = true;
+            _blackCharacterAnimator.enabled = true;
             _isGameActive = true;
         }
         
         public void SwapCharacters()
         {
-            if (IsSwappingPositions)
+            if (!_isGameActive || IsSwappingPositions)
             {
                 return;
             }

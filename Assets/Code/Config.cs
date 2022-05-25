@@ -13,6 +13,6 @@ namespace Avangardum.TwilightRun
         [field: SerializeField] public float PlayerCharacterBaseFallingDuration { get; [UsedImplicitly] private set; }
         [field: SerializeField] public float PlayerCharacterBaseLandingDuration { get; [UsedImplicitly] private set; }
         [field: SerializeField] public float BeginningEmptinessLength { get; [UsedImplicitly] private set; }
-        [field: SerializeField]  public float LevelElementsGapLength { get; [UsedImplicitly] private set; }
+        [field: SerializeField] public float LevelElementsGapLength { get; [UsedImplicitly] private set; }
     }
 }
