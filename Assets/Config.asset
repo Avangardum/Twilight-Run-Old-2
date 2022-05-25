@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f721b328a6954669b140174b081dcec3, type: 3}
   m_Name: Config
   m_EditorClassIdentifier: 
-  <PlayerCharacterBaseHorizontalSpeed>k__BackingField: 2
-  <PlayerCharacterBaseVerticalSpeed>k__BackingField: 1
+  <PlayerCharacterBaseHorizontalSpeed>k__BackingField: 4
   <PlayerCharacterSpeedMultiplierIncreaseSpeed>k__BackingField: 0.01666666
   <PlayerCharacterSpeedMultiplierMax>k__BackingField: 4
-  <PlayerCharacterJumpingDuration>k__BackingField: 0.1
-  <PlayerCharacterFallingDuration>k__BackingField: 0.8
-  <PlayerCharacterLandingDuration>k__BackingField: 0.1
+  <PlayerCharacterBaseJumpingDuration>k__BackingField: 0.1
+  <PlayerCharacterBaseFallingDuration>k__BackingField: 0.9
+  <PlayerCharacterBaseLandingDuration>k__BackingField: 0
+  <BeginningEmptinessLength>k__BackingField: 10
+  <LevelElementsGapLength>k__BackingField: 5

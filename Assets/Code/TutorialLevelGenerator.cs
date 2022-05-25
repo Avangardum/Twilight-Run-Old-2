@@ -18,5 +18,10 @@ namespace Avangardum.TwilightRun
         {
             throw new System.NotImplementedException();
         }
+
+        public void InjectDependencies(ILevelGenerationConfig config)
+        {
+            
+        }
     }
 }

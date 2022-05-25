@@ -23,6 +23,7 @@ namespace Avangardum.TwilightRun
             // inject dependencies
             _gameManager.InjectDependencies(_standardLevelGenerator, _tutorialLevelGenerator, _playerCharactersController, _pcInputManager);
             _playerCharactersController.InjectDependencies(_config);
+            _standardLevelGenerator.InjectDependencies(_config);
             _menuManager.InjectDependencies(_gameManager, _mainMenu, _shopMenu);
             _shopManager.InjectDependencies(_shopMenu, _cosmeticsManager);
             

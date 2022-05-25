@@ -1261,6 +1261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tracksSegmentPrefab: {fileID: 7015192710959759693, guid: bed737f39f8bbcf4485913834670d613, type: 3}
   _tracksSegmentLength: 30
+  _levelElementsList: {fileID: 11400000, guid: 6d869c642fbb005478bb47f8fdf99da2, type: 2}
 --- !u!1 &2092319032 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4520158136021526586, guid: 8398e8b65eb098540a8a53b03e17f28f, type: 3}

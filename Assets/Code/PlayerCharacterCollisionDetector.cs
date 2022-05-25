@@ -9,7 +9,6 @@ namespace Avangardum.TwilightRun
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log("ඞ");
             var otherGameObject = other.gameObject;
             GameColor otherColor = GameColor.None;
             if (otherGameObject.CompareTag("WhiteObstacle") || otherGameObject.CompareTag("BlackObstacle") || otherGameObject.CompareTag("RedObstacle"))

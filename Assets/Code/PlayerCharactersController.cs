@@ -46,9 +46,12 @@ namespace Avangardum.TwilightRun
         private GameObject _characterMovingDown;
         private float _topTrackY;
         private float _bottomTrackY;
-        private float _totalSwapDuration;
 
         private bool IsSwappingPositions => _charactersPositions is CharactersPositions.WhiteMovingDown or CharactersPositions.WhiteMovingUp;
+        private float SwapJumpingDuration => _config.PlayerCharacterBaseJumpingDuration / _speedMultiplier;
+        private float SwapFallingDuration => _config.PlayerCharacterBaseFallingDuration / _speedMultiplier;
+        private float SwapLandingDuration => _config.PlayerCharacterBaseLandingDuration / _speedMultiplier;
+        private float TotalSwapDuration => SwapJumpingDuration + SwapFallingDuration + SwapLandingDuration;
 
         public float SpeedMultiplier
         {
@@ -104,7 +107,6 @@ namespace Avangardum.TwilightRun
         public void InjectDependencies(IPlayerCharactersConfig config)
         {
             _config = config;
-            _totalSwapDuration = config.PlayerCharacterJumpingDuration + config.PlayerCharacterFallingDuration + config.PlayerCharacterLandingDuration;
         }
 
         private void Awake()
@@ -160,7 +162,7 @@ namespace Avangardum.TwilightRun
             if (IsSwappingPositions)
             {
                 _timeSinceSwapStart += Time.fixedDeltaTime;
-                var positionLerpArgument = (_timeSinceSwapStart - _config.PlayerCharacterJumpingDuration) / _config.PlayerCharacterFallingDuration;
+                var positionLerpArgument = (_timeSinceSwapStart - SwapJumpingDuration) / SwapFallingDuration;
                 
                 // set vertical position
                 var characterMovingUpPosition = _characterMovingUp.transform.position;
@@ -188,11 +190,11 @@ namespace Avangardum.TwilightRun
                 
                 // set animators state
                 SwappingState swappingState;
-                if (_timeSinceSwapStart < _config.PlayerCharacterJumpingDuration)
+                if (_timeSinceSwapStart < SwapJumpingDuration)
                 {
                     swappingState = SwappingState.Jumping;
                 }
-                else if (_timeSinceSwapStart < _config.PlayerCharacterJumpingDuration + _config.PlayerCharacterFallingDuration)
+                else if (_timeSinceSwapStart < SwapJumpingDuration + SwapFallingDuration)
                 {
                     swappingState = SwappingState.Falling;
                 }
@@ -204,7 +206,7 @@ namespace Avangardum.TwilightRun
                 _blackCharacterAnimator.SetInteger(AnimatorSwappingStateHash, (int) swappingState);
 
                 // check for swap end
-                if (_timeSinceSwapStart >= _totalSwapDuration)
+                if (_timeSinceSwapStart >= TotalSwapDuration)
                 {
                     // terminate swapping
                     _charactersPositions = _charactersPositions switch
