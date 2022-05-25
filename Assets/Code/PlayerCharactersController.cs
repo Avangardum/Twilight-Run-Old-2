@@ -77,6 +77,8 @@ namespace Avangardum.TwilightRun
             SpeedMultiplier = 1;
             _whiteCharacterAnimator.enabled = true;
             _blackCharacterAnimator.enabled = true;
+            _whiteCharacterAnimator.SetInteger(AnimatorSwappingStateHash, (int) SwappingState.None);
+            _blackCharacterAnimator.SetInteger(AnimatorSwappingStateHash, (int) SwappingState.None);
             _isGameActive = true;
         }
         

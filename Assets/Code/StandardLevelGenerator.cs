@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace Avangardum.TwilightRun
         private float _elementsFrontZ;
         private bool _isZeroTrackSegmentGenerated;
         private ILevelGenerationConfig _config;
+        private float _currentElementsDifficulty;
 
         public void GenerateToThePoint(float point)
         {
@@ -35,7 +37,7 @@ namespace Avangardum.TwilightRun
             // generate elements
             while (_elementsFrontZ < point)
             {
-                var element = _levelElementsList.GetRandomElement(0);
+                var element = _levelElementsList.GetRandomElement(_currentElementsDifficulty);
                 var elementGO = Instantiate(element.Prefab, new Vector3(0, 0, _elementsFrontZ), Quaternion.identity);
                 _levelObjects.Add(elementGO);
                 _elementsFrontZ += element.Length + _config.LevelElementsGapLength;
@@ -65,11 +67,17 @@ namespace Avangardum.TwilightRun
             _trackFrontZ = 0;
             _elementsFrontZ = _config.BeginningEmptinessLength;
             _isZeroTrackSegmentGenerated = false;
+            _currentElementsDifficulty = 0;
         }
 
         public void InjectDependencies(ILevelGenerationConfig config)
         {
             _config = config;
+        }
+
+        private void FixedUpdate()
+        {
+            _currentElementsDifficulty += _config.ElementsDifficultyIncreaseSpeed * Time.fixedDeltaTime;
         }
     }
 }

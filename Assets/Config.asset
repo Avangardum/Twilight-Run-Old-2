@@ -20,3 +20,4 @@ MonoBehaviour:
   <PlayerCharacterBaseLandingDuration>k__BackingField: 0
   <BeginningEmptinessLength>k__BackingField: 10
   <LevelElementsGapLength>k__BackingField: 5
+  <ElementsDifficultyIncreaseSpeed>k__BackingField: 0.01666666

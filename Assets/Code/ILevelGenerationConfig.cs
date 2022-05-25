@@ -4,5 +4,6 @@ namespace Avangardum.TwilightRun
     {
         public float BeginningEmptinessLength { get; }
         public float LevelElementsGapLength { get; }
+        public float ElementsDifficultyIncreaseSpeed { get; }
     }
 }
