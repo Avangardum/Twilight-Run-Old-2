@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Level Elements List
   m_EditorClassIdentifier: 
   _elements:
+  - <Name>k__BackingField: Bottom white spike
+    <Prefab>k__BackingField: {fileID: 7414051208457004698, guid: 9572c039f69693a4988cfe879ba2b36f, type: 3}
+    <Length>k__BackingField: 0.8
+    <Difficulty>k__BackingField: 0
   - <Name>k__BackingField: Bottom black spike
     <Prefab>k__BackingField: {fileID: 7414051208457004698, guid: d01ac8734ec2c70418f4d5c0b824d922, type: 3}
     <Length>k__BackingField: 0.8
