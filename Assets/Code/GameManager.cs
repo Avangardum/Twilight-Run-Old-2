@@ -14,23 +14,31 @@ namespace Avangardum.TwilightRun
         private IPlayerCharactersController _playerCharactersController;
         private IInputManager _inputManager;
         private IGameUI _gameUI;
+        private ICoinStorage _coinStorage;
         private bool _isGameActive;
 
         [SerializeField] private GameObject _whitePlayerCharacter;
 
         public void InjectDependencies(ILevelGenerator standardLevelGenerator, ILevelGenerator tutorialLevelGenerator, 
-            IPlayerCharactersController playerCharactersController, IInputManager inputManager, IGameUI gameUI)
+            IPlayerCharactersController playerCharactersController, IInputManager inputManager, IGameUI gameUI, ICoinStorage coinStorage)
         {
             _standardLevelGenerator = standardLevelGenerator;
             _tutorialLevelGenerator = tutorialLevelGenerator;
             _playerCharactersController = playerCharactersController;
             _inputManager = inputManager;
             _gameUI = gameUI;
+            _coinStorage = coinStorage;
 
             inputManager.Tap += OnTap;
             playerCharactersController.CharacterDied += OnCharacterDied;
+            playerCharactersController.CoinCollected += OnCoinCollected;
         }
-        
+
+        private void OnCoinCollected(object sender, EventArgs e)
+        {
+            _coinStorage.AddCoins(1);
+        }
+
         private void OnCharacterDied(object sender, EventArgs e)
         {
             _isGameActive = false;

@@ -25,3 +25,7 @@ MonoBehaviour:
     <Prefab>k__BackingField: {fileID: 7414051208457004698, guid: 1368ebf9840bf5f45bc557aabe41d136, type: 3}
     <Length>k__BackingField: 0.8
     <Difficulty>k__BackingField: 0.5
+  - <Name>k__BackingField: Black and white coins
+    <Prefab>k__BackingField: {fileID: 3565611691371336579, guid: d263f99b96b83d34bb3fca8a089b5a84, type: 3}
+    <Length>k__BackingField: 2
+    <Difficulty>k__BackingField: 0

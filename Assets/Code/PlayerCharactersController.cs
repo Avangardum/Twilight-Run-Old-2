@@ -121,8 +121,12 @@ namespace Avangardum.TwilightRun
             _blackCharacterStartPosition = _blackCharacter.transform.position;
             _bottomTrackY = _whiteCharacterStartPosition.y;
             _topTrackY = _blackCharacterStartPosition.y;
-            _whiteCharacter.GetComponent<PlayerCharacterCollisionDetector>().ObstacleCollision += OnWhiteCharacterObstacleCollision;
-            _blackCharacter.GetComponent<PlayerCharacterCollisionDetector>().ObstacleCollision += OnBlackCharacterObstacleCollision;
+            var whiteCharacterCollisionDetector = _whiteCharacter.GetComponent<PlayerCharacterCollisionDetector>();
+            var blackCharacterCollisionDetector = _blackCharacter.GetComponent<PlayerCharacterCollisionDetector>();
+            whiteCharacterCollisionDetector.ObstacleCollision += OnWhiteCharacterObstacleCollision;
+            blackCharacterCollisionDetector.ObstacleCollision += OnBlackCharacterObstacleCollision;
+            whiteCharacterCollisionDetector.CoinCollision += OnWhiteCharacterCoinCollision;
+            blackCharacterCollisionDetector.CoinCollision += OnBlackCharacterCoinCollision;
         }
 
         private void OnWhiteCharacterObstacleCollision(object sender, PlayerCharacterCollisionArgs args)
@@ -139,6 +143,28 @@ namespace Avangardum.TwilightRun
             {
                 KillCharacters();
             }
+        }
+        
+        private void OnWhiteCharacterCoinCollision(object sender, PlayerCharacterCollisionArgs args)
+        {
+            if (args.OtherColor == GameColor.White)
+            {
+                CollectCoin(args.OtherGameObject);
+            }
+        }
+
+        private void OnBlackCharacterCoinCollision(object sender, PlayerCharacterCollisionArgs args)
+        {
+            if (args.OtherColor == GameColor.Black)
+            {
+                CollectCoin(args.OtherGameObject);
+            }
+        }
+
+        private void CollectCoin(GameObject coinGO)
+        {
+            Destroy(coinGO);
+            CoinCollected?.Invoke(this, EventArgs.Empty);
         }
 
         private void KillCharacters()

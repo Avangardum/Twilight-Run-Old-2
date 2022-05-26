@@ -8,6 +8,8 @@ TagManager:
   - BlackObstacle
   - RedObstacle
   - TrackSegment
+  - WhiteCoin
+  - BlackCoin
   layers:
   - Default
   - TransparentFX
