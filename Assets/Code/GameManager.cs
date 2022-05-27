@@ -16,11 +16,14 @@ namespace Avangardum.TwilightRun
         private IGameUI _gameUI;
         private ICoinStorage _coinStorage;
         private bool _isGameActive;
+        private bool _isTutorial;
+        private ITutorialManager _tutorialManager;
 
         [SerializeField] private GameObject _whitePlayerCharacter;
 
         public void InjectDependencies(ILevelGenerator standardLevelGenerator, ILevelGenerator tutorialLevelGenerator, 
-            IPlayerCharactersController playerCharactersController, IInputManager inputManager, IGameUI gameUI, ICoinStorage coinStorage)
+            IPlayerCharactersController playerCharactersController, IInputManager inputManager, IGameUI gameUI, ICoinStorage coinStorage,
+            ITutorialManager tutorialManager)
         {
             _standardLevelGenerator = standardLevelGenerator;
             _tutorialLevelGenerator = tutorialLevelGenerator;
@@ -28,10 +31,17 @@ namespace Avangardum.TwilightRun
             _inputManager = inputManager;
             _gameUI = gameUI;
             _coinStorage = coinStorage;
+            _tutorialManager = tutorialManager;
 
             inputManager.Tap += OnTap;
             playerCharactersController.CharacterDied += OnCharacterDied;
             playerCharactersController.CoinCollected += OnCoinCollected;
+            tutorialManager.TutorialCleared += OnTutorialCleared;
+        }
+
+        private void OnTutorialCleared(object sender, EventArgs e)
+        {
+            _playerCharactersController.SetIsGameActive(false);
         }
 
         private void OnCoinCollected(object sender, EventArgs e)
@@ -42,8 +52,15 @@ namespace Avangardum.TwilightRun
         private void OnCharacterDied(object sender, EventArgs e)
         {
             _isGameActive = false;
-            _gameUI.Show();
-            _gameUI.ShowGameOverWindow();
+            if (!_isTutorial)
+            {
+                _gameUI.Show();
+                _gameUI.ShowGameOverWindow();
+            }
+            else
+            {
+                StartTutorial();
+            }
         }
 
         private void OnTap(object sender, EventArgs e)
@@ -57,12 +74,20 @@ namespace Avangardum.TwilightRun
             _currentLevelGenerator = _standardLevelGenerator;
             _currentLevelGenerator.ClearAll();
             _isGameActive = true;
+            _isTutorial = false;
+            _tutorialManager.Disable();
             _gameUI.HideGameOverWindow();
         }
 
         public void StartTutorial()
         {
-            throw new NotImplementedException();
+            _playerCharactersController.Reset();
+            _currentLevelGenerator = _tutorialLevelGenerator;
+            _currentLevelGenerator.ClearAll();
+            _isGameActive = true;
+            _isTutorial = true;
+            _tutorialManager.Enable();
+            _gameUI.HideGameOverWindow();
         }
 
         private void Update()

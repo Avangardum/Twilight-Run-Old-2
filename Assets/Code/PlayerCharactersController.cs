@@ -113,6 +113,11 @@ namespace Avangardum.TwilightRun
             _config = config;
         }
 
+        public void SetIsGameActive(bool value)
+        {
+            _isGameActive = value;
+        }
+
         private void Awake()
         {
             _whiteCharacterAnimator = _whiteCharacter.GetComponent<Animator>();

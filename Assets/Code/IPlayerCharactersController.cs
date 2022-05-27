@@ -9,5 +9,6 @@ namespace Avangardum.TwilightRun
         void Reset();
         void SwapCharacters();
         void InjectDependencies(IPlayerCharactersConfig config);
+        void SetIsGameActive(bool value);
     }
 }

@@ -1,27 +1,41 @@
+using System;
 using UnityEngine;
 
 namespace Avangardum.TwilightRun
 {
     public class TutorialLevelGenerator : MonoBehaviour, ILevelGenerator
     {
+        [SerializeField] private GameObject _tutorialLevelPrefab;
+        private GameObject _tutorialLevelInstance;
+        private bool _isTutorialLevelInstancePresent;
+
         public void GenerateToThePoint(float point)
         {
-            throw new System.NotImplementedException();
+            if (_isTutorialLevelInstancePresent)
+            {
+                return;
+            }
+
+            Instantiate(_tutorialLevelPrefab);
         }
 
         public void ClearBehindThePoint(float point)
         {
-            throw new System.NotImplementedException();
+            // nothing
         }
 
         public void ClearAll()
         {
-            throw new System.NotImplementedException();
+            if (_isTutorialLevelInstancePresent)
+            {
+                Destroy(_tutorialLevelInstance);
+                _isTutorialLevelInstancePresent = false;
+            }
         }
 
         public void InjectDependencies(ILevelGenerationConfig config)
         {
-            
+            // nothing
         }
     }
 }

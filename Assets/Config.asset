@@ -21,3 +21,10 @@ MonoBehaviour:
   <BeginningEmptinessLength>k__BackingField: 10
   <LevelElementsGapLength>k__BackingField: 5
   <ElementsDifficultyIncreaseSpeed>k__BackingField: 0.01666666
+  <TutorialHintData>k__BackingField:
+  - Point: 10
+    Image: {fileID: 0}
+  - Point: 20
+    Image: {fileID: 0}
+  - Point: 30
+    Image: {fileID: 0}
